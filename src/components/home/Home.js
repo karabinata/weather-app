@@ -34,7 +34,7 @@ const Home = ({ actions, weatherInfo, city }) => {
     <div className={isSunny ? 'sunny' : 'rainy'}>
       <WeatherWidget temp={main?.temp} isSunny={isSunny} />
       <div style={{ width: "100%", height: '100%' }}>
-        <img className="weather-image" src={isSunny ? '/SunnyWeather.png' : '/RainyWeather.png'} alt="Sunny" />
+        <img className="weather-image" src={isSunny ? '/assets/imgs/SunnyWeather.png' : '/assets/imgs/RainyWeather.png'} alt="Sunny" />
       </div>
     </div>
   );

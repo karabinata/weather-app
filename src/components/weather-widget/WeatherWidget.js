@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
-import Input from "../UI/Input/Input";
-import Button from "../UI/Button/Button";
+import { Input, Button } from "../UI";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { changeCity } from '../../store/actions';
@@ -47,14 +46,14 @@ const WeatherWidget = ({ city, isSunny, temp, actions }) => {
           className='city'
         />
         <label htmlFor="city" className={magnifierVisible ? 'magnifier' : 'hidden'}>
-          <img src="/Magnifier.png" alt="Magnifier" />
+          <img src="/assets/imgs/Magnifier.png" alt="Magnifier" />
         </label>
       </form>
       <div className="temp">
         <div className="degree-number">{temp?.toFixed(0)}</div>
         <div className="degree-sep">&deg;</div>
         <div className="degree-sign">C</div>
-        <img className="weather-icon-container" src="/RainyIcon.png" alt="rainy icon" />
+        <img className="weather-icon-container" src="/assets/imgs/RainyIcon.png" alt="rainy icon" />
       </div>
       <div className="weather-desc">{isSunny ? 'Sunny' : 'Raining'}</div>
       <Button onClick={() => history.push('/detail-view')} className="weather-btn" text="More details" htmlSym=" &#8250;" />
