@@ -1,0 +1,73 @@
+.weather-widget {
+  display: grid;
+  columns: auto 3;
+}
+
+.search {
+  display: flex;
+  width: 33%;
+}
+
+.city, .magnifier  {
+  font-weight: bold;
+  font-size: 18px;
+  display: inline-block;
+}
+
+.city {
+  width: 90%;
+  min-width: 94px;
+}
+  
+.temp {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: 40% 40%;
+  font-size: 1rem;
+  width: 60%;
+  margin-top: 10px;
+}
+
+.degree-number, .degree-sep {
+  font-size: 96px;
+  font-weight: bold;
+  line-height: 96px;
+}
+
+.degree-number {
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+.degree-sign {
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 60px;
+}
+
+.weather-icon-container {
+  grid-row-start: 2;
+  grid-column-start: 2;
+}
+
+.weather-desc {
+  text-align: left;
+  font-weight: bold;
+  font-size: 25px;
+  position: relative;
+  bottom: 25px;
+}
+
+.weather-btn {
+  text-align: left;
+  position: relative;
+  bottom: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+  
+  
+  
