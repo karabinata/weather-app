@@ -1,8 +1,9 @@
 import * as actionTypes from '../actions/actionTypes';
+import * as constants from '../../utils/constants';
 
 const initialState = {
     isFetching: false,
-    weatherInfo: "no weather data fetched yet"
+    weatherInfo: constants.NO_WEATHER_DATA_FETCHED
 };
 
 const weatherDataReducer = (state = initialState, action) => {

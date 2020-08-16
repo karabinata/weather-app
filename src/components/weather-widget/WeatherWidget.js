@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import { Input, Button } from "../UI";
 import { connect } from 'react-redux';
@@ -7,7 +7,7 @@ import { changeCity } from '../../store/actions';
 
 import "./WeatherWidget.less";
 
-const WeatherWidget = ({ city, isSunny, temp, actions }) => {
+const WeatherWidget = ({ city, hideDetails, onInputClick, fromHome, isSunny, temp, actions }) => {
   const history = useHistory();
 
   const [cityValue, setCityValue] = useState(city);
@@ -15,6 +15,14 @@ const WeatherWidget = ({ city, isSunny, temp, actions }) => {
   const [magnifierVisible, setMagnifierVisible] = useState(true);
 
   const { changeCity } = actions;
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (fromHome) {
+      inputRef.current.focus();
+    }
+  }, [fromHome]);
 
   const onChange = (e) => {
     e.preventDefault();
@@ -31,20 +39,30 @@ const WeatherWidget = ({ city, isSunny, temp, actions }) => {
   }
 
   const onMagnifierVisibilityChange = () => setMagnifierVisible((prevState) => !prevState)
+  const inputProps = {
+    onClick: onInputClick,
+    onFocus: onMagnifierVisibilityChange,
+    type: "text",
+    id: "city",
+    name: "city",
+    value: cityValue,
+    onChange: (e) => onChange(e),
+    onBlur: onMagnifierVisibilityChange,
+    className: "city",
+  };
+
+  if (fromHome) {
+    inputProps.ref = inputRef;
+  }
 
   return (
     <div className="weather-widget">
       <form method="get" className="search">
-        <Input 
-          onClick={onMagnifierVisibilityChange} 
-          type="text" 
-          id="city" 
-          name="city" 
-          value={cityValue} 
-          onChange={(e) => onChange(e)} 
-          onBlur={onMagnifierVisibilityChange}
-          className='city'
-        />
+        {
+          fromHome 
+            ? <Input {...inputProps} reference={inputRef} />
+            : <Input {...inputProps} />
+        }
         <label htmlFor="city" className={magnifierVisible ? 'magnifier' : 'hidden'}>
           <img src="/assets/imgs/Magnifier.png" alt="Magnifier" />
         </label>
@@ -53,11 +71,22 @@ const WeatherWidget = ({ city, isSunny, temp, actions }) => {
         <div className="degree-number">{temp?.toFixed(0)}</div>
         <div className="degree-sep">&deg;</div>
         <div className="degree-sign">C</div>
-        <img className="weather-icon-container" src="/assets/imgs/RainyIcon.png" alt="rainy icon" />
+        {
+          !hideDetails
+            ? <img 
+                className="weather-icon-container" 
+                src={isSunny ? "/assets/imgs/SunnyIcon.png" : "/assets/imgs/RainyIcon.png"}
+                alt="weather icon" />
+            : null
+        }
       </div>
-      <div className="weather-desc">{isSunny ? 'Sunny' : 'Raining'}</div>
-      <Button onClick={() => history.push('/detail-view')} className="weather-btn" text="More details" htmlSym=" &#8250;" />
-    </div>
+      <div className={!hideDetails ? "weather-desc-relative" : "weather-desc" }>{isSunny ? 'Sunny' : 'Raining'}</div>
+      {
+        !hideDetails
+          ? <Button onClick={() => history.push('/detail-view')} className="weather-btn" text="More details" htmlSym=" &#8250;" />
+          : null
+      }
+      </div>
   );
 }
 

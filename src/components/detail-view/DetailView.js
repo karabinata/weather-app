@@ -6,38 +6,35 @@ import { useHistory } from "react-router-dom";
 
 import withErrorHandler from '../../HOC/withErrorHandler/withErrorHandler';
 import WeatherWidget from '../weather-widget/WeatherWidget';
+import DetailsSection from '../details-section/DetailsSection';
 import axios from '../../apis/open-weather';
-import './Home.less';
+import './DetailView.less';
+import * as constants from '../../utils/constants';
 
-const Home = ({ actions, weatherInfo, city }) => {
+const DetailView = ({ actions, weatherInfo, city }) => {
   const history = useHistory();
   const { getWeatherData } = actions;
   const { weather, main}  = weatherInfo;
-  const weatherDesc = weather && weather[0].main;
+  const weatherDesc = weather && weather[0];
 
   useEffect(() => {
     const getData = async() => {
       await getWeatherData(city);
     }
 
-    getData();
-    window.addEventListener("scroll", handleScroll);
-
-    return function cleanup () {
-      window.removeEventListener("scroll", handleScroll); 
+    if (weatherInfo === constants.NO_WEATHER_DATA_FETCHED) {
+      getData();
     }
   }, [city, getWeatherData]);
 
-  const handleScroll = () => history.push('/detail-view');
-
   const isSunny = ['Clouds', 'Clear'].includes(weatherDesc);
 
+  const onInputClick = () => history.push('/');
+
   return (
-    <div className={isSunny ? 'sunny' : 'rainy'}>
-      <WeatherWidget fromHome={true} temp={main?.temp} isSunny={isSunny} />
-      <div style={{ width: "100%", height: '100%' }}>
-        <img className="weather-image" src={isSunny ? '/assets/imgs/SunnyWeather.png' : '/assets/imgs/RainyWeather.png'} alt="Sunny" />
-      </div>
+    <div className="detail-view">
+      <WeatherWidget onInputClick={onInputClick} temp={main?.temp} isSunny={isSunny} hideDetails={true} />
+      <DetailsSection />
     </div>
   );
 }
@@ -58,4 +55,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default withErrorHandler(connect(mapStateToProps, mapDispatchToProps)(Home), axios);
+export default withErrorHandler(connect(mapStateToProps, mapDispatchToProps)(DetailView), axios);
