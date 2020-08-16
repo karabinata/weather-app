@@ -9,6 +9,8 @@ const Input = (props) => {
     onChange={props.onChange} 
     onClick={props.onClick}
     onBlur={props.onBlur}
+    ref={props.reference}
+    onFocus={props.onFocus}
   />;
 }
 

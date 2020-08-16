@@ -1,0 +1,1 @@
+export const NO_WEATHER_DATA_FETCHED = 'no weather data fetched yet';

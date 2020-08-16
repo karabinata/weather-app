@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Modal, Button } from '../../UI';
+import { Modal, Button } from '../../components/UI';
 
 const withErrorHandler = (WrappedComponent, axios) => {
     return (props) => {
@@ -14,7 +14,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             axios.interceptors.response.use(null, error => {
                 setError(error);
             });
-        }, [axios]);
+        }, []);
 
         return <>
             <Modal show={error}>
