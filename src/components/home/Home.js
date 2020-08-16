@@ -4,7 +4,9 @@ import { bindActionCreators } from 'redux';
 import { getWeatherData} from '../../store/actions';
 import { useHistory } from "react-router-dom";
 
+import withErrorHandler from '../HOC/withErrorHandler/withErrorHandler';
 import WeatherWidget from '../weather-widget/WeatherWidget';
+import axios from '../../apis/open-weather';
 import './Home.less';
 
 const Home = ({ actions, weatherInfo, city }) => {
@@ -56,4 +58,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withErrorHandler(connect(mapStateToProps, mapDispatchToProps)(Home), axios);
