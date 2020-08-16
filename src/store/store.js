@@ -2,7 +2,7 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import rootReducer from "./reducers";
 import { createLogicMiddleware } from 'redux-logic';
 import rootLogic from './logic/';
-import axios from 'axios';
+import axios from '../apis/open-weather';
 
 const deps = {
     httpClient: axios
